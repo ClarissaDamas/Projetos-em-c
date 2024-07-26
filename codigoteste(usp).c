@@ -1,8 +1,10 @@
 #include <stdio.h> // biblioteca standard de Input/Output
+#include <stdlib.h> //Contém funções para conversão de números, alocação de memória 
 
-main(){
-int j; // declara var. j inteira
-printf("Digite um valor inteiro e ENTER\n"); // mostra na tela
-scanf("%d", &j); // ler j, NAO digitar NADA entre %d e "
-printf("Valor de j e' %d\n", j); // mostra na tela valor de j lido
+int main(void) {
+    int idade = scanf("Qual sua idade?");
+    char nome = scanf("Qual o seu nome?");
+    float peso = scanf("Qual o seu peso?");
+    _Bool faz_faculdade = scanf("faz faculdade?");
+    printf("%d %c %f %c", idade, nome, peso, faz_faculdade);
 } // fim main

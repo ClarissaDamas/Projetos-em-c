@@ -2,7 +2,7 @@
 #include <conio.h>
 
 void exibe(int c, int x, int y) {
-    _gotoxy(x,y);
+    _gotoxy(x,y); //A função gotoxy() é utilizada para posicionar o cursor na posição (coordenadas de linha e coluna)desejada.Para utilizar esta função é necessário declarar o arquivo cabeçalho conio.h
     putchar(c);
 }
 
