@@ -3,7 +3,7 @@
 int main(void) {
   
   int idade;
-  char sexo;
+  unsigned char sexo;
   float altura;
   _Bool fazfaculdade;
 
@@ -14,7 +14,7 @@ int main(void) {
   scanf("%f", &altura);
  
   printf("qual o seu sexo");
-  scanf("%c", &sexo);
+  scanf(' %c', &sexo);
 
   printf("Voce faz faculdade?");
   scanf("%d", &fazfaculdade);
