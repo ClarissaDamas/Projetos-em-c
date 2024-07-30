@@ -24,10 +24,20 @@ void somando() {
   
 }
 
+void operadorternario () {
+
+    int a = 5, b = 6, c = 3, f;
+    f = (a == b)?b:c;
+    printf("%d",f);
+
+    }
+
+
+
 void main() {
 
     somando();
-    alfabeto();
+    operadorternario();
 
 }
 
