@@ -33,11 +33,30 @@ void operadorternario () {
     }
 
 
+void vetor() {
+
+    //int vet[10];
+    int vet[10] = {2,34,5,87,9,10,55,6,2,1}; //eu so posso declarar assim com os valores quando estou declarando pela primeira vez
+    printf("%d", vet[3]);
+
+}
+
+void acessarmatriz() {
+
+    //para isso vou usar o FOR
+    int vet[10] = {2,34,5,87,9,10,55,6,2,1}; //eu so posso declarar assim com os valores quando estou declarando pela primeira vez
+    int i;
+    for(i=0;i<10;i++){
+        printf("%d ", vet[i]);
+    }
+
+}
+
 
 void main() {
 
-    somando();
-    operadorternario();
+    //operadorternario();
+    acessarmatriz();
 
 }
 
