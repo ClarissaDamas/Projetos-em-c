@@ -42,8 +42,8 @@ void analiseConvex(int n, int vvx[],int vvy[]) { //para analisar vou verificr se
 		else printf("\n\n vertice %d e convexo \n", i)
 		i++;
 			}
-	}
 }
+
 	//convexo
 	//int Convexo(a,b)
 	//a = (vvx, vvy)
