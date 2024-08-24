@@ -45,10 +45,10 @@ void analiseConvex(int n,int vvx[],int vvy[]){
     while (i<n){
         w = convexo(i, (i+1)%n, vvx, vvy);
         if(w<0){
-        printf("\n Vertice %d eh concavo\n", i);
+        printf("\n Vertice %d e concavo\n", i);
         }
         else{
-        printf("\n Vertice %d eh convexo\n", i);
+        printf("\n Vertice %d e convexo\n", i);
         }
         i++;
     }
