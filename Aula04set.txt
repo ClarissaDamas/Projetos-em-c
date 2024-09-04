@@ -1,0 +1,17 @@
+-double é mais eficiente que float, especialmene em coisa cientifica q exige muitos dados
+-se for fazer uma divisao usando float ou double, preciso colocar virgula para fazer a divisao
+
+OPERADORES LOGICOS
+|| = OR , ele retorna 1 ou 0
+&& = E , se os dois sao verdadeiros retorna 1
+
+BIBLIOTECAS
+#include <sdio.h> = tem a funcao print
+
+ESCAPE
+\n = nova linha
+\t = tabulacao
+\r = retrocesso
+\" = caractere
+\\ caractere \
+%% caractre 
