@@ -1,0 +1,12 @@
+Eu coloco em funcao das variaveis basicas
+
+1-reesecreve a equacao da variavel basica
+alguma das que estvaa positiva vira zero(nesse caso foi F1)
+ao virar zero troca novamente
+2- isso vai se repetindo ate nao poder realizar mais
+
+
+para resolver de minimizar = 
+modifica multiplando por menos 1
+convertendo todo o modelo para maximizar
+atencao para inverter tambem o sinal

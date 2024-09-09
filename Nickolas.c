@@ -3,13 +3,31 @@
 #include <math.h>
 
 
-void defVetor(int n, int vx[], int vy[]) {
+/*void defVetor(int n, int vx[], int vy[]) {
     //Cria os vértices do polígono.
     int i;
     for(i = 0; i < n; i++) {
         vx[i] = rand() % 201 - 100;
         vy[i] = rand() % 201 - 100;
     }    
+}
+*/
+
+void defVetor(int n, int vx[], int vy[]) {
+	/*int i;
+	for(i=0; i<n; i++) {
+		vx[i] = rand()%10;
+		vy[i] = rand()%10; 
+	}*/	
+
+	vx[0] = 10; vy[0]=5;
+	vx[1] = 9; vy[1]=8;
+	vx[2] = 6; vy[2]=9;
+	vx[3] = 3; vy[3]=12;
+	vx[4] = 2; vy[4]=7;
+	vx[5] = 5; vy[5]=6;
+	vx[6] = 7; vy[6]=4;
+
 }
 
 void mostraVetor(int n, int vx[], int vy[]) {
@@ -131,22 +149,22 @@ int GeraPoliConvexo(int *n, int vc[],int vx[],int vy[],int vvx[], int vvy[]){
 void organizaPoli(int n, int vx[], int vy[]) {
     //Organiza a lista de vetores usando método bubble sort.
     printf("\n");
-    double *angulo, temp;
-    angulo = (double*)malloc(n * sizeof(double));
+    double *vetorAngulo, temp;
+    vetorAngulo = (double*)malloc(n * sizeof(double));
     int i, loop = 1, organiza = 1;
     for (int i = 0; i < n; i++) {
-        angulo[i] = atan2(vy[i], vx[i]) * 180.0 / M_PI;
-        if (angulo[i] < 0) {
-            angulo[i] += 360;
+        vetorAngulo[i] = atan2(vy[i], vx[i]) * 180.0 / M_PI;
+        if (vetorAngulo[i] < 0) {
+            vetorAngulo[i] += 360;
         }
     }
     while (organiza) {
         organiza = 0;
         for (i = 0; i < n - 1; i++) {
-            if (angulo[i] > angulo[i + 1]) {
-                temp = angulo[i];
-                angulo[i] = angulo[i + 1];
-                angulo[i + 1] = temp;
+            if (vetorAngulo[i] > vetorAngulo[i + 1]) {
+                temp = vetorAngulo[i];
+                vetorAngulo[i] = vetorAngulo[i + 1];
+                vetorAngulo[i + 1] = temp;
                 temp = vx[i];
                 vx[i] = vx[i + 1];
                 vx[i + 1] = temp;
@@ -157,9 +175,18 @@ void organizaPoli(int n, int vx[], int vy[]) {
             }
         }
     }
-    free(angulo);
+   printf(" %6.2f ", vetorAngulo[i]);
     }
-    
+
+/*void mostraAngulo(int n, float angulo[]){
+	int i;
+	printf("\n Angulos \n");
+	for(i=0; i<n; i++){
+		printf(" %6.2f ", angulo[i]);
+	}	
+}
+*/
+
 int main() {
     int n, i;
     int *vx, *vy, *vvx, *vvy, *vc;
@@ -192,6 +219,7 @@ int main() {
         printf("\n");
         printf("\nConvexidade do polígono convexo: ");
         mostraConvexidade(n, vc);
+        //mostraAngulo(n, angulo);
     }
     free(vx);
     free(vy);
