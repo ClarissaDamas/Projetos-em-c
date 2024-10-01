@@ -43,11 +43,15 @@ int convexo (int i, int j, float a[], float b[]){
 
 void AnaliseConvesidade (int n, float vvx[], float vvy[]) {
 	int i = 0;
+	int s = 0;
 	int w;
 	while (i<n) {
 		w = convexo(i, (i+1)%n, vvx, vvy); 
 		if(w<0) //quando o if so tem uma linha nao precisa de chaves
 			printf("\n\n vertice %d é concavo \n", i);
+			for (s=0; s<n; s++){   //tirar a concavidade do vertice para ter ele convexo
+				p;
+				}
 		else
 			printf("\n\n Vertice %d é convexo \n", i);
 		i++;
@@ -136,6 +140,10 @@ void ordenaAngulos(int n, float vx[], float vy[], float vetorAngulo[]) {
             }
         }
 }   }
+
+
+//ver todos q sao concavos e passar para convexo
+
 
 void main(void) {   //inicia com o main
 	int n;

@@ -37,6 +37,8 @@ int main(void)
   porém em outro caso, a entrada tambem poderia ser um arquivo */
   
   fgets(aluno.nome, 40, stdin);
+
+  //? stdin, fgets, fflush,getch
   
   printf("Disciplina ......: ");
   fflush(stdin);

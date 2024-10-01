@@ -79,24 +79,24 @@ CalCentro(int n, int vx[], int vy[], float *cx, float *cy){
 	cy /= n;
 }
 */
-void poliOrigemCentro(int n, float* vx,float*vy){
+void poliOrigemCentro(int n,stPto* v){  //
 	int i;
-	float ccx, ccy;
+	stPto cc;
 
 	
 	// calcula centro
 	//calcCentro(n, vx, vy, &ccx, &ccy);
-	ccx = ccy =0.0f;
+	cc.x = cc.y =0.0f;
 	for(i=0; i<n; i++) {
 		ccx += vx[i];
 		ccy += vy[i]; 
 	}
-	ccx /= n;
-	ccy /= n;	
+	cc.x /= n; //media artitmetica
+	cc.y /= n;	
 	// translacao de pontos
 	for(i=0; i<n; i++) {
-		vx[i] -= ccx;
-		vy[i] -= ccy; 
+		v[i] -= cc.x;
+		v[i] -= cc.y; 
 	}
 }
 void geraPoliRegular(int n, float vx[], float vy[], float va[]) {
