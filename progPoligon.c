@@ -41,6 +41,9 @@ int convexo (int i, int j, float a[], float b[]){
 	return w;	
 }
 
+//mudar concavo para convexo precisamos alterar a soma de seus ângulos internos. Num polígono convexo, a soma dos ângulos internos é sempre menor que 180 graus. Para torná-lo côncavo, podemos alterar um dos ângulos internos para um ângulo reflexo, que seja maior que 180 graus
+
+
 void AnaliseConvesidade (int n, float vvx[], float vvy[]) {
 	int i = 0;
 	int w;
@@ -105,41 +108,13 @@ void geraPoliRegular(int n, float vx[], float vy[], float va[]) {
 	
 }
 
-void mostraAngulo(int n, float vetorAngulo[]){
+void mostraAngulo(int n, float va[]){
 	int i;
 	printf("\n Angulos \n");
 	for(i=0; i<n; i++){
-		printf(" %6.2f ", vetorAngulo[i]);
+		printf(" %6.2f ", va[i]);
 	}	
 }
-
-
-
-/*void ordenacao(angulo,vy,vx,temp,)
-angulo ordenar o vertice
-verifica se vai ser maior ou menor
-
-   while (organiza) {
-        organiza = 0;
-        for (i = 0; i < n - 1; i++) {
-            if (angulo[i] > angulo[i + 1]) {
-                temp = angulo[i];
-                angulo[i] = angulo[i + 1];
-                angulo[i + 1] = temp;
-                temp = vx[i];
-                vx[i] = vx[i + 1];
-                vx[i + 1] = temp;
-                temp = vy[i];
-                vy[i] = vy[i + 1];
-                vy[i + 1] = temp;
-                organiza = 1;
-            }
-        }
-    }
-    free(angulo);
-    }
-
-*/
 
 void main(void) {
 	int n;
