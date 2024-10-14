@@ -3,6 +3,7 @@
 
 void defVetor(int n, float vx[], float vy[]) {
 	int i;
+	
 /*
 	for(i=0; i<n; i++) {
 		vx[i] = rand()%10;
@@ -41,13 +42,14 @@ int convexo (int i, int j, float a[], float b[]){
 	return w;	
 }
 
-void AnaliseConvesidade (int n, float vvx[], float vvy[]) {
+void AnaliseConvesidade (int n, float vvx[], float vvy[], float poligon[]) {
 	int i = 0;
 	int w;
 	while (i<n) {
 		w = convexo(i, (i+1)%n, vvx, vvy);
 		if(w<0)
 			printf("\n\n vertice %d is concavo \n", i);
+			//poligon[n] = 0
 		else
 			printf("\n\n Vertice %d is convexo \n", i);
 		i++;
@@ -91,19 +93,14 @@ void ConverteConvexo (int n, float vvx[], float vvy[]) {
 	while (i<n) {
 		w = convexo(i, (i+1)%n, vvx, vvy);
 		if(w<0)
-			printf("\n\n vertice %d is concavo \n", i); //A ideia básica para transformar um vértice côncavo em convexo é reposicionar o vértice de forma que ele se alinhe mais com a forma convexa do polígono. Uma maneira simples de fazer isso é mover o vértice para uma posição intermediária entre seus dois vértices adjacentes
-			/*while(i<n) {
-				int inicial = (i-1 + n)%n; //Uma abordagem simples para ajustar um vértice côncavo é mover o vértice côncavo para o ponto médio entre seus dois vizinhos. Essa técnica pode corrigir a concavidade e garantir que o polígono se aproxime de um formato convexo
-				int next = (i+1)%n;
-				vvx[i] = (vvx[inicial] - vvx[next])/2;
-				vvy[i] = (vvy[inicial] - vvy[next])/2;
-			}	
-			*/
+			printf("\n\n vertice %d is concavo \n", i); //transformar um vértice de côncavo em convexo
+
 		else
 			printf("\n\n Vertice %d is convexo \n", i);
 		i++;
 	}
 }
+
 
 /*
 float unirvertices(int n, float vx[], float vy[], float vvx[], float vvy[]){
@@ -168,7 +165,7 @@ void mostraAngulo(int n, float va[]){
 void main(void) {
 	int n;
 	float vx[99], vy[99], vvx[99], vvy[99];
-	float va[99];
+	float va[99], poling[n];
 	
 	printf("\n Digite val de n: ");
 	scanf("%d", &n);
@@ -186,7 +183,7 @@ void main(void) {
 //	printf("\n Arestas  do poligono \n");
 //	mostraVetor(n, vvx, vvy);
 	printf("\n Antes de Analise \n");
-	AnaliseConvesidade(n, vvx, vvy);
+	AnaliseConvesidade(n, vvx, vvy, poling);
 
 	printf("\n Produto vetorial dos vertices \n");
 	produtoVetorial(n, vx, vy, vvx, vvy);
