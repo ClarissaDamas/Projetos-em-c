@@ -85,10 +85,34 @@ float produtoVetorial(int n, float vx[], float vy[], float vvx[], float vvy[]) {
 	 
 }
 
+void ajustarVertice(float vx[], float vy[], int indiceConcavo, int iAnterior, int iProximo) {
+    vx[indiceConcavo] = (vx[iAnterior] + vx[iProximo]) / 2;
+    vy[indiceConcavo] = (vy[iAnterior] + vy[iProximo]) / 2;
+}
 
-/*
-float unirvertices(int n, float vx[], float vy[], float vvx[], float vvy[]){
 
+float percorrerVertice(int n, float vx[], float vy[], float vvx[], float vvy[]){
+	int i, indiceConcavo = -1;
+    // Percorre todos os vértices do polígono
+    for (i = 0; i < n; i++) {
+        int iAnterior = (i - 1 + n) % n;
+        int iProximo = (i + 1) % n;
+
+		float cross = produtoVetorial(vx[iAnterior], vy[iAnterior], vx[i], vy[i], vx[iProximo], vy[iProximo]);
+
+		        if (cross < 0) {
+            indiceConcavo = i;
+            break;
+        }
+    }
+	 if (indiceConcavo != -1) {
+        int iAnterior = (indiceConcavo - 1 + n) % n;
+        int iProximo = (indiceConcavo + 1) % n;
+        ajustarVertice(vx, vy, indiceConcavo, iAnterior, iProximo);
+    }
+	
+    return indiceConcavo != -1;
+	
 }
 
 // Função para ajustar o vértice côncavo
@@ -97,7 +121,6 @@ void ajustarVertice(float vx[], float vy[], int indiceConcavo, int iAnterior, in
     vy[indiceConcavo] = (vy[iAnterior] + vy[iProximo]) / 2;
 }
 
-*/
 
 
 
@@ -171,4 +194,12 @@ void main(void) {
 
 	printf("\n Produto vetorial dos vertices \n");
 	produtoVetorial(n, vx, vy, vvx, vvy);
+	while (ajustarConcavidade(vx, vy, n)) {
+        // Repete até não encontrar mais vértices côncavos
+    }
+
+    // Mostra o polígono convexo resultante
+    printf("\nO poligono convexo resultante:\n");
+    mostraPoligono(n, vx, vy);
+
 }
