@@ -2,20 +2,20 @@
 #include <math.h>
 
 void defVetor(int n, float vx[], float vy[]) {
-	/*int i;
+	int i;
+/*
 	for(i=0; i<n; i++) {
 		vx[i] = rand()%10;
 		vy[i] = rand()%10; 
-	}*/	
-
+	}	
+*/
 	vx[0] = 10; vy[0]=5;
 	vx[1] = 9; vy[1]=8;
 	vx[2] = 6; vy[2]=9;
 	vx[3] = 3; vy[3]=12;
 	vx[4] = 2; vy[4]=7;
 	vx[5] = 5; vy[5]=6;
-	vx[6] = 7; vy[6]=4;
-
+	vx[6] = 7; vy[6]=4;	
 }
 
 void mostraVetor(int n, float vx[], float vy[]){
@@ -54,10 +54,13 @@ void AnaliseConvesidade (int n, float vvx[], float vvy[]) {
 	}
 }
 
+
 float prodVetor(float ax, float ay, float bx, float by){
 	return(ax*bx + ay*by);
 }
+
 /*
+
 CalCentro(int n, int vx[], int vy[], float *cx, float *cy){
 	int i;
 	*cx = *cy =0.0f;
@@ -69,6 +72,55 @@ CalCentro(int n, int vx[], int vy[], float *cx, float *cy){
 	cy /= n;
 }
 */
+
+float produtoVetorial(int n, float vx[], float vy[], float vvx[], float vvy[]) { //adicionar prod vetorial para fazer ao inves de struct com o vx vy
+
+	int i = 0;
+	float vetxy = 0.0f;
+	while(i<n) {
+		vetxy = ((vx[i+1]-vx[i])*(vy[i+2]-vy[i]))-((vy[i+1]-vy[i])*(vx[i+2]-vx[i]));
+		i++;
+		printf("(%f, %f)", vx[i], vy[i]);		
+	}
+	 
+}
+
+void ConverteConvexo (int n, float vvx[], float vvy[]) {
+	int i = 0;
+	int w;
+	while (i<n) {
+		w = convexo(i, (i+1)%n, vvx, vvy);
+		if(w<0)
+			printf("\n\n vertice %d is concavo \n", i); //A ideia básica para transformar um vértice côncavo em convexo é reposicionar o vértice de forma que ele se alinhe mais com a forma convexa do polígono. Uma maneira simples de fazer isso é mover o vértice para uma posição intermediária entre seus dois vértices adjacentes
+			/*while(i<n) {
+				int inicial = (i-1 + n)%n; //Uma abordagem simples para ajustar um vértice côncavo é mover o vértice côncavo para o ponto médio entre seus dois vizinhos. Essa técnica pode corrigir a concavidade e garantir que o polígono se aproxime de um formato convexo
+				int next = (i+1)%n;
+				vvx[i] = (vvx[inicial] - vvx[next])/2;
+				vvy[i] = (vvy[inicial] - vvy[next])/2;
+			}	
+			*/
+		else
+			printf("\n\n Vertice %d is convexo \n", i);
+		i++;
+	}
+}
+
+/*
+float unirvertices(int n, float vx[], float vy[], float vvx[], float vvy[]){
+
+}
+
+// Função para ajustar o vértice côncavo
+void ajustarVertice(float vx[], float vy[], int indiceConcavo, int iAnterior, int iProximo) {
+    vx[indiceConcavo] = (vx[iAnterior] + vx[iProximo]) / 2;
+    vy[indiceConcavo] = (vy[iAnterior] + vy[iProximo]) / 2;
+}
+
+*/
+
+
+
+
 void geraPoliRegular(int n, float vx[], float vy[], float va[]) {
 	int i;
 	float ccx, ccy,cosAng, normaB, arcos;
@@ -105,41 +157,13 @@ void geraPoliRegular(int n, float vx[], float vy[], float va[]) {
 	
 }
 
-void mostraAngulo(int n, float vetorAngulo[]){
+void mostraAngulo(int n, float va[]){
 	int i;
 	printf("\n Angulos \n");
 	for(i=0; i<n; i++){
-		printf(" %6.2f ", vetorAngulo[i]);
+		printf(" %6.2f ", va[i]);
 	}	
 }
-
-
-
-/*void ordenacao(angulo,vy,vx,temp,)
-angulo ordenar o vertice
-verifica se vai ser maior ou menor
-
-   while (organiza) {
-        organiza = 0;
-        for (i = 0; i < n - 1; i++) {
-            if (angulo[i] > angulo[i + 1]) {
-                temp = angulo[i];
-                angulo[i] = angulo[i + 1];
-                angulo[i + 1] = temp;
-                temp = vx[i];
-                vx[i] = vx[i + 1];
-                vx[i + 1] = temp;
-                temp = vy[i];
-                vy[i] = vy[i + 1];
-                vy[i + 1] = temp;
-                organiza = 1;
-            }
-        }
-    }
-    free(angulo);
-    }
-
-*/
 
 void main(void) {
 	int n;
@@ -163,4 +187,9 @@ void main(void) {
 //	mostraVetor(n, vvx, vvy);
 	printf("\n Antes de Analise \n");
 	AnaliseConvesidade(n, vvx, vvy);
+
+	printf("\n Produto vetorial dos vertices \n");
+	produtoVetorial(n, vx, vy, vvx, vvy);
+	printf("\n Conversao \n");
+	ConverteConvexo(n, vvx, vvy);
 }
