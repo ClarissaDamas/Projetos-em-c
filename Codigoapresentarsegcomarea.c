@@ -156,6 +156,18 @@ void coverteConcavoConvex(int n, float vx[], float vy[], float vvx[], float vvy[
     converteVetorPolig(n, vx, vy, vvx, vvy);
 }
 
+float calcularArea(float vx[], float vy[], int n) {
+    float soma = 0;
+
+    for (int i = 0; i < n; i++) {
+        int prox = (i + 1) % n;  // próximo ponto, usando o operador % para fechar o polígono
+        soma += (vx[i] * vy[i + 1]) - (vx[i + 1].x * vy[i]);
+    }
+
+    return fabs(soma) / 2.0; //oq sao FABS
+}
+
+
 void main(void) {
 	int n;
 	float vx[99], vy[99], vvx[99], vvy[99];
