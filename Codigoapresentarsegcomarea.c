@@ -156,15 +156,17 @@ void coverteConcavoConvex(int n, float vx[], float vy[], float vvx[], float vvy[
     converteVetorPolig(n, vx, vy, vvx, vvy);
 }
 
-float calcularArea(float vx[], float vy[], int n) {
-    float soma = 0;
+float AreaPoligono(float vx[], float vy[], int n) {
+    float sum = 0;
+	float area = 0;
 
     for (int i = 0; i < n; i++) {
-        int prox = (i + 1) % n;  // próximo ponto, usando o operador % para fechar o polígono
-        soma += (vx[i] * vy[i + 1]) - (vx[i + 1].x * vy[i]);
+        sum += (vx[i] * vy[(i+1)%n]) - (vx[(i+1)%n] * vy[i]);
     }
 
-    return fabs(soma) / 2.0; //oq sao FABS
+	area = (sum) / 2.0;
+
+    return area; 
 }
 
 
@@ -219,5 +221,8 @@ void main(void) {
 	// An�lise de convexidade dos v�rtices
 	printf("\nAn�lise de convexidade dos v�rtices DEPOIS da convers�o:\n");
 	AnaliseConvesidade(n, vvx, vvy, convex);
+
+	float area = AreaPoligono(vx, vy, n);
+    printf("\nA área do polígono é: %.2f\n", area);
 
 }
