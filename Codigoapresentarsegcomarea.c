@@ -157,21 +157,24 @@ void coverteConcavoConvex(int n, float vx[], float vy[], float vvx[], float vvy[
 }
 
 float AreaPoligono(float vx[], float vy[], int n) {
-    float sum = 0;
-	float area = 0;
+    int sum = 0;
+	//float area;
 
-    for (int i = 0; i < n; i++) {
-        sum += (vx[i] * vy[(i+1)%n]) - (vx[(i+1)%n] * vy[i]);
+	for (int i = 0; i < n; i++) {
+    	sum += (vx[i] * vy[(i+1)%n]) - (vx[(i+1)%n] * vy[i]);
+		//printf("%d",i);
+		//printf("%f", area);
+		//area = (sum) / 2.0;
     }
+	//printf("%d",i);
 
-	area = (sum) / 2.0;
-
-    return area; 
+    return (sum) / 2.0;
 }
 
 
 void main(void) {
 	int n;
+	//float area = 0;
 	float vx[99], vy[99], vvx[99], vvy[99];
 	float va[99], convex[99];;
 	
