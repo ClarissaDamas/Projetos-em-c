@@ -171,6 +171,16 @@ float AreaPoligono(float vx[], float vy[], int n) {
     return (sum) / 2.0;
 }
 
+void mostrarPoligono(int n, float vx[], float vy[]) {
+    printf("\nVectors = {\n");
+    for (int i = 0; i < n; i++) {
+        printf("    Vector[(%.2f, %.2f), (%.2f, %.2f)]", vx[i], vy[i], vx[(i + 1) % n], vy[(i + 1) % n]);
+        if (i != n - 1) {
+            printf(",\n");
+        }
+    }
+    printf("\n}\n");
+}
 
 void main(void) {
 	int n;
@@ -208,10 +218,15 @@ void main(void) {
 	printf("\nAn�lise de convexidade dos v�rtices antes da convers�o:\n");
 	AnaliseConvesidade(n, vvx, vvy, convex);
 
+	float areaconcavo = AreaPoligono(vx, vy, n);
+    printf("\nA area do poligono no concavo: %.2f\n", areaconcavo);
+	mostrarPoligono(n, vx, vy);
+
 	// Converte v�rtices c�ncavos em convexos
 	coverteConcavoConvex(n, vx, vy, vvx, vvy, convex);
 	converteVetorPolig(n, vx, vy, vvx, vvy);
 
+	mostrarPoligono(n, vx, vy);
 	// Exibe as novas arestas ap�s a convers�o dos v�rtices c�ncavos
 	printf("\n\nArestas do pol�gono ap�s convers�o dos v�rtices c�ncavos:\n");
 	mostraVetor(n, vvx, vvy);
@@ -225,7 +240,7 @@ void main(void) {
 	printf("\nAn�lise de convexidade dos v�rtices DEPOIS da convers�o:\n");
 	AnaliseConvesidade(n, vvx, vvy, convex);
 
-	float area = AreaPoligono(vx, vy, n);
-    printf("\nA área do polígono é: %.2f\n", area);
+	float areaconvexo = AreaPoligono(vx, vy, n);
+    printf("\nA area do poligono convexo e: %.2f\n", areaconvexo);
 
 }
