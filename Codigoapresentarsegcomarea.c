@@ -81,18 +81,7 @@ void AnaliseConvesidade (int n, float vvx[], float vvy[], float convex[]) {
 float prodVetor(float ax, float ay, float bx, float by){
 	return(ax*bx + ay*by);
 }
-/*
-CalCentro(int n, int vx[], int vy[], float *cx, float *cy){
-	int i;
-	*cx = *cy =0.0f;
-	for(i=0; i<n; i++) {
-		*cx += vx[i];
-		*cy += vy[i]; 
-	}
-	cx /= n;
-	cy /= n;
-}
-*/
+
 void geraPoliRegular(int n, float vx[], float vy[], float va[]) {
 	int i;
 	float ccx, ccy,cosAng, normaB, arcos;
@@ -140,15 +129,12 @@ void mostraAngulo(int n, float va[]){
 void coverteConcavoConvex(int n, float vx[], float vy[], float vvx[], float vvy[], float convex[]) {
     int i;
     for (i = 0; i < n; i++) {
-        if (convex[i] == 0) {  // Se o v�rtice � c�ncavo
-            //mover o v�rtice para um novo ponto baseado na m�dia dos vizinhos
-            printf("\n\n X posterior: %f e anterior: %f ", vx[(i+1)%n],vx[((i-1)+n)%n ]);
-            printf("\n\n Y posterior: %f e anterior: %f \n", vy[(i+1)%n],vy[((i-1)+n)%n ]);
+        if (convex[i] == 0) {  
 
             float n_vx = (vx[(i+1)%n] + vx[(i-1+n)%n]) / 2;
             float n_vy = (vy[(i+1)%n] + vy[(i-1+n)%n]) / 2;
 
-            vx[i] = n_vx;  // Atualiza a posi��o do v�rtice c�ncavo
+            vx[i] = n_vx;  // Atualiza a posicao do vertice concavo
             vy[i] = n_vy;
         }
     }
@@ -158,20 +144,19 @@ void coverteConcavoConvex(int n, float vx[], float vy[], float vvx[], float vvy[
 
 float AreaPoligono(float vx[], float vy[], int n) {
     int sum = 0;
-	//float area;
+
 
 	for (int i = 0; i < n; i++) {
     	sum += (vx[i] * vy[(i+1)%n]) - (vx[(i+1)%n] * vy[i]);
-		//printf("%d",i);
-		//printf("%f", area);
-		//area = (sum) / 2.0;
+
     }
-	//printf("%d",i);
 
     return (sum) / 2.0;
 }
 
-void mostrarPoligono(int n, float vx[], float vy[]) {
+//a funcao abaixo organiza os vetores para serem colocados no geogebra
+
+void mostrarPoligonoGeogebra(int n, float vx[], float vy[]) {
     printf("\nVectors = {\n");
     for (int i = 0; i < n; i++) {
         printf("    Vector[(%.2f, %.2f), (%.2f, %.2f)]", vx[i], vy[i], vx[(i + 1) % n], vy[(i + 1) % n]);
@@ -184,63 +169,40 @@ void mostrarPoligono(int n, float vx[], float vy[]) {
 
 void main(void) {
 	int n;
-	//float area = 0;
 	float vx[99], vy[99], vvx[99], vvy[99];
 	float va[99], convex[99];;
 	
     printf("\n Digite val de n: ");
 	scanf("%d", &n);
 	defVetor(n, vx, vy);
-	printf("\n Vertices do poligono \n");
+	printf("\n Os vertices do poligono sao ");
 	mostraVetor(n, vx, vy);
 
 	converteVetorPolig(n, vx, vy, vvx, vvy);
 
-	// Imprime os v�rtices originais
-	printf("\nV�rtices do pol�gono desorganizados:\n");
-	mostraVetor(n, vx, vy);
-
-	printf("\nArestas do pol�gono antes de regularizar:\n");
-	mostraVetor(n, vvx, vvy);
-
-    // Organiza os v�rtices do pol�gono para garantir que sejam inseridos de forma correta
+    //Organiza os v�rtices do pol�gono para garantir que sejam inseridos de forma correta
+	
 	geraPoliRegular(n, vx, vy, va);
 
-	// Recalcula as arestas agora com os v�rtices organizados
-	converteVetorPolig(n, vx, vy, vvx, vvy);
-	printf("\nArestas do pol�gono ap�s reorganiza��o:\n");
-	mostraVetor(n, vvx, vvy);
-
-    printf("\nV�rtices do pol�gono organizados:\n");
-	mostraVetor(n, vx, vy);
-
-    // An�lise de convexidade dos v�rtices antes
-	printf("\nAn�lise de convexidade dos v�rtices antes da convers�o:\n");
+    // Analise de convexidade dos vertices antes
+	printf("\n\n Analise de convexidade dos vertices antes da conversao:\n");
 	AnaliseConvesidade(n, vvx, vvy, convex);
 
-	float areaconcavo = AreaPoligono(vx, vy, n);
-    printf("\nA area do poligono no concavo: %.2f\n", areaconcavo);
-	mostrarPoligono(n, vx, vy);
 
-	// Converte v�rtices c�ncavos em convexos
+	// Converte vertices concavos em convexos
 	coverteConcavoConvex(n, vx, vy, vvx, vvy, convex);
 	converteVetorPolig(n, vx, vy, vvx, vvy);
 
-	mostrarPoligono(n, vx, vy);
-	// Exibe as novas arestas ap�s a convers�o dos v�rtices c�ncavos
-	printf("\n\nArestas do pol�gono ap�s convers�o dos v�rtices c�ncavos:\n");
-	mostraVetor(n, vvx, vvy);
-
-    // Mostra os novos v�rtices
-
-	printf("\nV�rtices do pol�gono ap�s convers�o:\n");
+	printf("\nVertices do poligono apos conversao:\n");
 	mostraVetor(n, vx, vy);
 
-	// An�lise de convexidade dos v�rtices
-	printf("\nAn�lise de convexidade dos v�rtices DEPOIS da convers�o:\n");
+	// Analise de convexidade dos vertices
+	printf("\nAnalise de convexidade dos vertices DEPOIS da conversao:\n");
 	AnaliseConvesidade(n, vvx, vvy, convex);
 
 	float areaconvexo = AreaPoligono(vx, vy, n);
     printf("\nA area do poligono convexo e: %.2f\n", areaconvexo);
+
+	mostrarPoligonoGeogebra(n, vx, vy);
 
 }
