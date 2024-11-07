@@ -1,0 +1,1 @@
+//buscar a posicao e verificar se e maior ou menor q a posicao q estou buscando
