@@ -1,0 +1,49 @@
+#include <stdlib.h>
+#include <math.h>
+
+typedef struct Elem {  
+	int  info;
+	struct Elem* prox;
+} stElem;
+
+typedef struct Lst 
+{  
+	int  n;
+	stElem* no;
+} stLst;
+
+stElem* lst_insere (stLst *lst, int val)
+{
+	stElem *novo = (stElem*) malloc(sizeof(stElem));
+	novo->info = val;
+	novo->prox = lst->no;
+	lst->n +=1;
+	return novo;
+}
+
+stLst *lst_cria (void)
+{
+	stLst *lst = (stLst*) malloc(sizeof(stLst));
+	lst->n = 0;
+	lst->no = NULL;
+	return lst;
+}
+
+void lstMostraElem(stLst *lst){
+	stElem *node;
+	node = lst->no;
+	while (node) {
+		printf("\n %d ", node->info);
+		node = node->prox;
+	}
+}
+
+int main (void)
+{
+	stLst* lst;            // declara uma lista não inicializada
+	lst = lst_cria();    // cria e inicializa lista como vazia
+	lst->no= lst_insere(lst, 23); // insere 23 na lista
+	lst->no = lst_insere(lst, 45); // insere 5 na lista
+	lstMostraElem(lst);
+	return 0;
+}
