@@ -42,17 +42,17 @@ void insereLista (stLst *lst, char cc)
 	stElem *noA, *noNovo;
 	int sw=0;
 	
-	noA = buscaAtualiza(lst,cc,&sw); 
-	if(sw==0){ // Significa que o caractere não existe na lista e será necessário criar um novo nó
+	noA = buscaAtualiza(lst,cc,&sw);
+	if(sw==0){
 		noNovo = (stElem*) malloc(sizeof(stElem));
-		noNovo->c = cc; //armazena o caracter cc no campo c do no
+		noNovo->c = cc;
 		noNovo->f = 1;
 		lst->n +=1;
 		if(noA){
 			noNovo->next = noA->next;
 			noA->next = noNovo;
 		}
-		else { //O caractere já está na lista, e nada mais precisa ser feito
+		else {
 			noNovo->next = lst->first;
 			lst->first = noNovo;
 		}
@@ -91,7 +91,7 @@ void mostraList(stLst *lst){
 	stElem *node;
 	node = lst->first; 
 	while (node) {
-		printf("\n ( %c: %d )", node->c,node->f);
+		printf("\n ( caractere %c   frequencia %d )", node->c,node->f);
 		node = node->next;
 	}
 }
@@ -105,66 +105,85 @@ void eliminaLista(stLst *lst) {
 		lst->n -= 1;
 	}
 }
-stElem *geraArvoreHauff(stLst *lst) {
-    while (lst->n > 1) {
+
+stElem *ReordenaArvoreHuffman(stLst *lst) {
+    while (lst->n > 1) { //Número de elementos na lista
         // Pegue os dois primeiros nós com menor frequência
-        stElem *primeiro = lst->first;
+        stElem *primeiro = lst->first; //Ponteiro para o primeiro elemento da lista
         stElem *segundo = primeiro->next;
 
         // Crie um novo nó pai
         stElem *novo = (stElem *)malloc(sizeof(stElem));
-        novo->c = '*'; // Nó interno
+        novo->c = '+'; // Este nó representa um nó interno na árvore de Huffman, marcado com o caractere especial 
         novo->f = primeiro->f + segundo->f;
         novo->filhoE = primeiro;
         novo->filhoD = segundo;
         novo->next = NULL;
 
-        // Atualize a lista
-        lst->first = segundo->next;
-        lst->n -= 2;
+        // Decremento da lista
+        lst->first = segundo->next; 
+        lst->n -= 2; 
 
-        // Insira o novo nó na lista
-        stElem *aux = lst->first, *prev = NULL;
-        while (aux && aux->f < novo->f) {
-            prev = aux;
-            aux = aux->next;
+        // compara frequencia dos NOS com a existente do novo NO e coloca na posicao certa
+        stElem *encontrapos = lst->first, *prev = NULL; //Enquanto a frequência de aux nao for nula, ainda precisa ver os NOS
+        while (encontrapos && encontrapos->f < novo->f) {
+            prev = encontrapos;
+            encontrapos = encontrapos->next;
         }
-        if (prev) prev->next = novo;
-        else lst->first = novo;
-        novo->next = aux;
+        if (prev) {
+            prev->next = novo;
+        } else {
+            lst->first = novo;
+        }
+        novo->next = encontrapos;
 
-        lst->n++;
+        lst->n += 1;
     }
-    return lst->first; // A raiz da árvore
+    return lst->first; // Retorna a raiz da árvore
 }
-void imprimeArvoreECodigos(stElem *raiz, char *codigo, int profundidade, int nivel) {
+// Função para gerar os códigos de Huffman
+void geraCodigosHuffman(stElem *raiz, char *valorcode, int seta) {
     if (!raiz) return;
 
-    // Percorre a subárvore direita (para mostrar a estrutura da árvore invertida)
-    imprimeArvoreECodigos(raiz->filhoD, codigo, profundidade + 1, nivel + 1);
-
-    // Mostra a árvore com indentação
-    for (int i = 0; i < nivel; i++) 
-        printf("    ");
-    if (raiz->c == '*') // Nó interno
-        printf("* (%d)\n", raiz->f);
-    else // Nó folha
-        printf("%c (%d)\n", raiz->c, raiz->f);
-
-    // Se for folha, imprime o código correspondente
+    // Nó folha
     if (!raiz->filhoE && !raiz->filhoD) {
-        codigo[profundidade] = '\0';
-        printf("Código para '%c': %s\n", raiz->c, codigo);
+        valorcode[seta] = '\0';
+        printf("VALOR %s\n '%c':" , valorcode, raiz->c);
+        return;
     }
 
-    // Percorre a subárvore esquerda
-    codigo[profundidade] = '0';
-    imprimeArvoreECodigos(raiz->filhoE, codigo, profundidade + 1, nivel + 1);
+    // Recorre para os filhos
+    valorcode[seta] = '0';
+    geraCodigosHuffman(raiz->filhoE, valorcode, seta + 1); //se ela segue o esquerdo adiciona 
 
-    // Percorre a subárvore direita
-    codigo[profundidade] = '1';
-    imprimeArvoreECodigos(raiz->filhoD, codigo, profundidade + 1, nivel + 1);
+    valorcode[seta] = '1';
+    geraCodigosHuffman(raiz->filhoD, valorcode, seta + 1);
 }
+void printarvorehuffman(stElem *raiz, int nivel) { //nessa funcao primeiro percorre direito depois esquerdo
+    if (!raiz) return;
+
+    // Percorre a subárvore direita primeiro (para mostrar invertida)
+    printarvorehuffman(raiz->filhoD, nivel + 1);
+
+    // Imprime o nível atual
+    for (int i = 0; i < nivel; i++) 
+        printf("    "); // O nível do nó é indicado por 4 espaços
+    if (raiz->c == '+') // Nó interno
+        printf("* (%d)\n", raiz->f);
+    else // Se o nó não tiver filhos (filhoE e filhoD são nulos), é um nó folha
+        printf("%c (%d)\n", raiz->c, raiz->f);
+
+    // Percorre a subárvore esquerda
+    printarvorehuffman(raiz->filhoE, nivel + 1);
+}
+// Função para liberar a memória da árvore
+void liberaArvore(stElem *raiz) {
+    if (!raiz) return;
+    liberaArvore(raiz->filhoE);
+    liberaArvore(raiz->filhoD);
+    free(raiz);
+}
+
 int main (void)
 {
 	FILE *pArq;           // declaração de váriavel de ponteiro de Arquivo
@@ -174,7 +193,7 @@ int main (void)
 	lst.n = 0;            // cria e inicializa lista como vazia
 	lst.first = NULL;     // nulo
 	
-	pArq = fopen("TextoDoProg2.txt","r");
+	pArq = fopen("textoProg2lista.txt","r");
 	if(!pArq){
 		printf("\n Arquivo com problema ... \n");
 		exit(1);
@@ -186,16 +205,21 @@ int main (void)
 	}
 	fclose(pArq);
 	
+	//ORDENACAO
 	ordenaPorFrequencia(&lst);
 	printf("Lista de Frequência:\n");
 	mostraList(&lst);
 	
-	raiz = geraArvoreHauff(&lst);
 	
-	char codigo[256];
-    printf("\nÁrvore de Huffman e Códigos:\n");
-    imprimeArvoreECodigos(raiz, codigo, 0, 0);
-	
+	//ARVORE HUFFMAN
+    raiz = ReordenaArvoreHuffman(&lst);
+    printf("\n ARVORE HUFFMAN \n");
+    printarvorehuffman(raiz, 0);
+    char codigo[256];
+    geraCodigosHuffman(raiz, codigo, 0);
+
+    liberaArvore(raiz);
+
 	eliminaLista(&lst);
 	
 	return 0;
