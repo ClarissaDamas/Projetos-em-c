@@ -1,0 +1,25 @@
+#Slide aula04 pag 4
+.data
+mensg:
+
+.text
+addi t0
+addi t1
+
+# Em add da linha abaixo(no slide aula 04 linha , ele esta somando dois valores que ja estao na memoria. Portanto, nao precisa usar addi
+add t2,t1
+
+#a7 significa chamar ao sistema, o 4 sifnifica print a null terminated-string to the console. O 4 vai ser guardado no a7. Com 4 imprime uma string, e com 1 imprime uma inter
+li a7, 4
+#li registro e la para carregar endereço
+la a0, mensg
+ecall  #chama o simulador
+
+#Quando usei ecall, o a0 foi "liberado' portanto posso usar esse endereço de novo. O a0 é temporario
+li a7, 1
+add a0, t2, zero
+ecall
+
+fim:
+li a7, 10
+ecall
