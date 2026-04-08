@@ -1,0 +1,23 @@
+.data
+str_resposta: .space 20 
+str_msg1: .asciz "\n Adivinha qual é a capital do Rio de Janeiro?"
+
+.text
+.global main
+
+main:
+
+  li a7, 4
+  la a0, str_msg1
+  ecall
+
+  li a7, 4
+  la a0, str_msg2
+  ecall
+
+  li a7, 4
+  la a0, str_msg3
+  ecall
+
+
+
