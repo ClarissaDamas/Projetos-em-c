@@ -1,3 +1,7 @@
+#Aula de hoje foi para aprender do-while
+#Pagina 7 tem mais exercicios
+Proxima etapa vai ser criar função
+
 .data
 str_resposta: .space 20 
 str_msg1: .asciz "\n Adivinha qual é a capital do Rio de Janeiro?"
