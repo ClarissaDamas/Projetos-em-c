@@ -1,1 +1,68 @@
+.data
+entrada1: .asciz
+entrada2: .asciz 
+entrada3: .asciz 
+entrada4: .asciz 
+entrada5: .asciz 
+resultado: .asciz
+
+.text
+
+li a7, 4
+la a0, entrada2
+ecall
+
+li a7, 5
+ecall
+
+mv t0, a0
+
+#leitura segundo
+li a7, 4
+la a0, entrada2
+ecall
+
+li a7, 5
+ecall
+
+mv t1, a0
+
+#leitura terceiro
+li a7, 4
+la a0, entrada2
+ecall
+
+li a7, 5
+ecall
+
+mv t2, a0
+
+#leitura quarto
+li a7, 4
+la a0, entrada2
+ecall
+
+li a7, 5
+ecall
+
+mv t3, a0
+
+#leitura quinto
+li a7, 4
+la a0, entrada2
+ecall
+
+li a7, 5
+ecall
+
+mv t4, a0
+
+#soma inteiros
+add t2, 10, t1, t3, t4
+
+li a7, 4 
+ecall
+
+
+
 
