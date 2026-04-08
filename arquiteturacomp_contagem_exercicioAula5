@@ -1,0 +1,102 @@
+.data
+    msg_input   db "Digite um numero (0-50): ", 0
+    msg_result  db "Numeros maiores que 15: ", 0
+    newline     db 10, 0
+
+.bss
+    count       resd 1          ; contador de numeros > 15
+    loop_i      resd 1          ; contador do loop
+    num         resd 1          ; numero lido
+
+.text
+    global _start
+
+_start:
+    ; inicializa contadores
+    mov dword [count], 0
+    mov dword [loop_i], 0
+
+#verifica se ja leu 10 numeros
+loop_start:
+    cmp dword [loop_i], 10
+    bge print_result
+
+#exibe mensagem de entrada
+    mov eax, 4                  ; syscall write
+    mov ebx, 1                  ; stdout
+    mov ecx, msg_input
+    mov edx, 24
+    int 0x80
+
+    ; lê entrada do usuário
+    mov eax, 3                  ; syscall read
+    mov ebx, 0                  ; stdin
+    mov ecx, buffer
+    mov edx, 12
+    int 0x80
+
+    ; converte string para inteiro (atoi manual)
+    mov esi, buffer
+    mov eax, 0                  ; acumulador
+    mov ecx, 0                  ; sinal (0 = positivo)
+
+convert_loop:
+    movzx ebx, byte [esi]
+    cmp bl, 10                  ; newline?
+    je convert_done
+    cmp bl, 13                  ; carriage return?
+    je convert_done
+    cmp bl, 0                   ; fim de string?
+    je convert_done
+    cmp bl, '0'
+    jl next_char
+    cmp bl, '9'
+    jg next_char
+    sub bl, '0'                 ; converte char -> digito
+    imul eax, eax, 10
+    add eax, ebx
+
+next_char:
+    inc esi
+    jmp convert_loop
+
+convert_done:
+    mov [num], eax
+
+    ; verifica se numero > 15
+    cmp dword [num], 15
+    ble not_greater
+
+    ; incrementa contador
+    inc dword [count]
+
+not_greater:
+    ; incrementa loop
+    inc dword [loop_i]
+    jmp loop_start
+
+print_result:
+    ; exibe mensagem de resultado
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg_result
+    mov edx, 24
+    int 0x80
+
+    ; converte count para string e exibe
+    mov eax, [count]
+    add eax, '0'                
+    mov [buffer], al
+    mov byte [temp+1], 10    
+    mov byte [temp+2], 0
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, temp
+    mov edx, 2
+    int 0x80
+
+    ; encerra o programa
+    mov eax, 1                  ; syscall exit
+    mov ebx, 0
+    int 0x80
